@@ -1,8 +1,15 @@
-import mongoose from "mongoose";
+import mongoose, { Document, Schema } from "mongoose";
 
+interface IYoutube extends Document {
+  id: number;
+  link: string | null;
+  title: string | null;
+  status: string;
+  comment: string | null;
+  uid: string | null;
+}
 
-
-const youtubeSchema = new mongoose.Schema({
+const youtubeSchema: Schema<IYoutube> = new Schema({
   id: {
     type: Number,
     required: true,
@@ -36,6 +43,6 @@ const youtubeSchema = new mongoose.Schema({
 // Create a unique index on the id field
 youtubeSchema.index({ id: 1 }, { unique: true });
 
-const Youtube = mongoose.models.Youtube || mongoose.model('Youtube',youtubeSchema);
+const Youtube = mongoose.models.Youtube || mongoose.model<IYoutube>('Youtube', youtubeSchema);
 
 export default Youtube;

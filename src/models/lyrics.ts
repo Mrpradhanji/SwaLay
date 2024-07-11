@@ -1,7 +1,22 @@
-const mongoose = require('mongoose');
+import mongoose, { Schema, Document } from 'mongoose';
 
-// Define the schema
-const lyricsSchema = new mongoose.Schema({
+// Define the interface for the Lyric document
+interface ILyric extends Document {
+  Lyid: number;
+  uid: number;
+  Label_name: string;
+  Email_Address: string;
+  Phone_Number: number;
+  Song_Name: string;
+  Writer_Name: string;
+  Language: string;
+  Isrc: string;
+  Lyrics: string;
+  status: number;
+}
+
+// Define the schema for the Lyric collection
+const lyricsSchema: Schema<ILyric> = new Schema({
   Lyid: {
     type: Number,
     required: true,
@@ -56,14 +71,14 @@ const lyricsSchema = new mongoose.Schema({
     type: Number,
     required: true,
     min: 0,
-    max: Math.pow(10, 11) - 1 //
+    max: Math.pow(10, 11) - 1 // Maximum value for 11 digits
   },
 });
 
 // Create a unique index on the Lyid field
 lyricsSchema.index({ Lyid: 1 }, { unique: true });
 
-// Create the model
-const Lyric = mongoose.models.Lyric ||  mongoose.model('Lyrics', lyricsSchema);
+// Create the model for the Lyric collection
+const Lyric = mongoose.models.Lyric || mongoose.model<ILyric>('Lyric', lyricsSchema);
 
 export default Lyric;

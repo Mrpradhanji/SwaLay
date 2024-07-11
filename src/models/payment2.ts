@@ -1,8 +1,15 @@
+import mongoose, { Schema, Document } from 'mongoose';
 
-import { kMaxLength } from "buffer";
-import mongoose from "mongoose";
+interface IPay extends Document {
+  id: number;
+  link?: string | null;
+  title?: string | null;
+  status?: string;
+  comment?: string | null;
+  uid?: string | null;
+}
 
-const tableSchema = new mongoose.Schema({
+const tableSchema: Schema<IPay> = new Schema({
   id: {
     type: Number,
     required: true,
@@ -19,7 +26,7 @@ const tableSchema = new mongoose.Schema({
   status: {
     type: String,
     default: '1',
-    kMaxLength : 11,
+    maxlength: 11,
   },
   comment: {
     type: String,
@@ -33,7 +40,6 @@ const tableSchema = new mongoose.Schema({
 
 tableSchema.index({ id: 1 }, { unique: true });
 
-
-const Pay = mongoose.models.Pay || mongoose.model("Pay",tableSchema);
+const Pay = mongoose.models.Pay || mongoose.model<IPay>('Pay', tableSchema);
 
 export default Pay;

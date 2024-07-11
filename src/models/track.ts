@@ -1,6 +1,43 @@
-import mongoose from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
 
-const trackSchema = new mongoose.Schema({
+// Define the Track interface extending Document
+export interface ITrack extends Document {
+  id: number;
+  released: string | null;
+  song: string | null;
+  composer: string | null;
+  singer: string | null;
+  lyrics: string | null;
+  music: string | null;
+  producer: string | null;
+  isrc: string | null;
+  duration: string | null;
+  url: string | null;
+  cid: number | null;
+  trackno: string | null;
+  cut: string | null;
+  link: string | null;
+  SpotifyLink: string | null;
+  AppleLink: string | null;
+  Instagram: string | null;
+  Facebook: string | null;
+  tags: string | null;
+  cut3: string | null;
+  platformLinks: string | null;
+  otherSinger: string | null;
+  otherLyricist: string | null;
+  otherProducer: string | null;
+  otherComposer: string | null;
+  category: string | null;
+  type: string | null;
+  version: string | null;
+  composerIPI: string | null;
+  iprs: number | null;
+  role: string | null;
+}
+
+// Define the schema
+const trackSchema: Schema<ITrack> = new Schema({
   id: {
     type: Number,
     required: true,
@@ -131,9 +168,10 @@ const trackSchema = new mongoose.Schema({
     default: null,
   },
 });
+
 trackSchema.index({ id: 1 }, { unique: true });
 
-
-const Track = mongoose.models.Track || mongoose.model("Track", trackSchema);
+// Define the model
+const Track = mongoose.models.Track || mongoose.model<ITrack>("Track", trackSchema);
 
 export default Track;
