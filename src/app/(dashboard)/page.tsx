@@ -2,7 +2,7 @@ import Image from "next/image";
 import Style from "../styles/Home.module.css"
 import "bootstrap-icons/font/bootstrap-icons.css"
 import HomeStatsCard from "@/components/HomeStatsCard";
-
+//import page2 from "./profile/page";
 const Home = () => {
 
 
@@ -47,7 +47,8 @@ const Home = () => {
         </div>
 
       </div> */}
-      <HomeStatsCard/>
+    
+     <HomeStatsCard/>
 
       <div className={`mt-3 p-2  ${Style.toolContainer}`}>
 
@@ -146,8 +147,8 @@ const Home = () => {
         </div>
 
       </div>
-
-
+        
+     
 
     </div >
   );

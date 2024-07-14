@@ -20,6 +20,7 @@ interface FormData {
 }
 
 const AlbumForm: React.FC = () => {
+  // useState hook to manage the form data
   const [formData, setFormData] = useState<FormData>({
     title: '',
     releaseDate: '',
@@ -34,28 +35,34 @@ const AlbumForm: React.FC = () => {
     cLine: '',
   });
 
+  // useState hook to manage form validation errors
   const [errors, setErrors] = useState<{ [key: string]: string[] }>({});
 
+  // Handling file drop for artwork
   const onDrop = (acceptedFiles: File[]) => {
     setFormData({ ...formData, artwork: acceptedFiles[0] });
   };
 
+  // useDropzone hook for handling file uploads
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
       'image/*': ['.jpeg', '.jpg', '.png'],
-     }, // Accepts JPEG and PNG images
+    },
     multiple: false,
   });
-  
+
+  // Handling changes to form input fields
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  // Handling form submission
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      // Validate form data using albumSchema
       await albumSchema.parse(formData);
       console.log('Form data is valid:', formData);
       // Submit form data
@@ -211,7 +218,7 @@ const AlbumForm: React.FC = () => {
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
               {errors.duration && <p className="text-red-500 text-sm mt-1">{errors.duration[0]}</p>}
-            </div> 
+            </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700">P Line</label>
@@ -253,4 +260,4 @@ const AlbumForm: React.FC = () => {
   );
 };
 
-export default AlbumForm; 
+export default AlbumForm;

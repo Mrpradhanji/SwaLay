@@ -1,11 +1,12 @@
 import Image from "next/image"
 import Style from "../../styles/Profile.module.css"
 
-const page = () => {
+const Page = () => {
   return (
+    
     // <div className="flex" >
     <div className="grid grid-cols-12 gap-4 ">
-
+      {/*
       <div className={`col-span-3 h-screen  ${Style.profileSidebar}`}>
 
         <div className={`my-4 ${Style.profileImgContainer}`}>
@@ -24,9 +25,9 @@ const page = () => {
 
         </div>
 
-      </div>
+      </div>*/}
       {/* <div className={`col-span-9 h-screen ${Style.profileContainer}`}> */}
-      <div className={`col-span-9 h-screen `}>
+     {/* <div className={`col-span-9 h-screen `}>
 
         <div className={Style.profileContainer}>
           <div className="flex items-center justify-between">
@@ -134,13 +135,13 @@ const page = () => {
 
         </div>
 
+//old code
 
-
-      </div>
+      </div>*/}
 
     </div>
 
   )
 }
 
-export default page
+export default Page;
