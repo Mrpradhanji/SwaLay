@@ -1,23 +1,12 @@
+// components/SignupFormDemo.tsx
 "use client";
 import React, { useState } from "react";
-import { z } from "zod";
+import SignupSchema from '../../Schema/labelactivation'; // Adjust the path as necessary
 import { Label } from './ui/label';
 import { Input } from './ui/input';
 import { cn } from '../../../utils/cn';
 
-// Define Zod schema for form validation
-const SignupSchema = z.object({
-  firstname: z.string().min(1, "Name is required"),
-  email: z.string().email("Invalid email address"),
-  contact: z.string().regex(/^\d{3}-\d{3}-\d{4}$/, "Invalid contact format, expected XXX-XXX-XXXX"),
-  recordLabel: z.string().min(1, "Record Label is required"),
-  userType: z.enum(["Normal Client", "Super Client"]),
-}).refine((data) => ["Normal Client", "Super Client"].includes(data.userType), {
-  path: ["userType"],
-  message: "Invalid user type",
-});
-
-export function SignupFormDemo() {
+ function SignupFormDemo() {
   const [errors, setErrors] = useState<any>({});
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -122,3 +111,5 @@ const LabelInputContainer = ({
     </div>
   );
 };
+
+export default SignupFormDemo

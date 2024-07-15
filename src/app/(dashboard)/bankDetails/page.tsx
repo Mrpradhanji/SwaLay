@@ -1,20 +1,6 @@
-'use client'
+'use client';
 import { useState, ChangeEvent, FormEvent } from 'react';
-import { z } from 'zod';
-
-// Define the Zod schema for bank details
-const Bankdetails = z.object({
-  accountHolderName: z.string().nonempty("Account holder name is required"),
-  bankName: z.string().nonempty("Bank name is required"),
-  branchName: z.string().nonempty("Branch name is required"),
-  accountNumber: z.string().nonempty("Account number is required"),
-  ifscCode: z.string().nonempty("IFSC code is required"),
-  upiId: z.string().nonempty("UPI ID is required"),
-  panNumber: z.string().nonempty("PAN number is required"),
-  gst: z.string().nonempty("GST number is required"),
-});
-
-type BankDetails = z.infer<typeof Bankdetails>;
+import bankDetailsSchema from '@/app/Schema/Bankdetails';
 
 interface Errors {
   [key: string]: {
@@ -23,7 +9,7 @@ interface Errors {
 }
 
 const BankDetailsForm = () => {
-  const [formData, setFormData] = useState<BankDetails>({
+  const [formData, setFormData] = useState({
     accountHolderName: '',
     bankName: '',
     branchName: '',
@@ -47,7 +33,7 @@ const BankDetailsForm = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const result = Bankdetails.safeParse(formData);
+    const result = bankDetailsSchema.safeParse(formData);
 
     if (!result.success) {
       const validationErrors = result.error.format();
@@ -69,7 +55,7 @@ const BankDetailsForm = () => {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label htmlFor="accountHolderName" className="block text-sm font-medium text-gray-700">
-          {getLabelWithAsterisk("Account Holder Name")}
+          {getLabelWithAsterisk('Account Holder Name')}
         </label>
         <input
           type="text"
@@ -84,7 +70,7 @@ const BankDetailsForm = () => {
       </div>
       <div>
         <label htmlFor="bankName" className="block text-sm font-medium text-gray-700">
-          {getLabelWithAsterisk("Bank Name")}
+          {getLabelWithAsterisk('Bank Name')}
         </label>
         <input
           type="text"
@@ -99,7 +85,7 @@ const BankDetailsForm = () => {
       </div>
       <div>
         <label htmlFor="branchName" className="block text-sm font-medium text-gray-700">
-          {getLabelWithAsterisk("Branch Name")}
+          {getLabelWithAsterisk('Branch Name')}
         </label>
         <input
           type="text"
@@ -114,7 +100,7 @@ const BankDetailsForm = () => {
       </div>
       <div>
         <label htmlFor="accountNumber" className="block text-sm font-medium text-gray-700">
-          {getLabelWithAsterisk("Account Number")}
+          {getLabelWithAsterisk('Account Number')}
         </label>
         <input
           type="text"
@@ -129,7 +115,7 @@ const BankDetailsForm = () => {
       </div>
       <div>
         <label htmlFor="ifscCode" className="block text-sm font-medium text-gray-700">
-          {getLabelWithAsterisk("IFSC Code")}
+          {getLabelWithAsterisk('IFSC Code')}
         </label>
         <input
           type="text"
@@ -144,7 +130,7 @@ const BankDetailsForm = () => {
       </div>
       <div>
         <label htmlFor="upiId" className="block text-sm font-medium text-gray-700">
-          {getLabelWithAsterisk("UPI ID")}
+          {getLabelWithAsterisk('UPI ID')}
         </label>
         <input
           type="text"
@@ -159,7 +145,7 @@ const BankDetailsForm = () => {
       </div>
       <div>
         <label htmlFor="panNumber" className="block text-sm font-medium text-gray-700">
-          {getLabelWithAsterisk("PAN Number")}
+          {getLabelWithAsterisk('PAN Number')}
         </label>
         <input
           type="text"
@@ -174,7 +160,7 @@ const BankDetailsForm = () => {
       </div>
       <div>
         <label htmlFor="gst" className="block text-sm font-medium text-gray-700">
-          {getLabelWithAsterisk("GST")}
+          {getLabelWithAsterisk('GST')}
         </label>
         <input
           type="text"

@@ -31,7 +31,7 @@ const bankDetailsSchema = z.object({
     .regex(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid PAN Number format'),
   gst: z
     .string()
-    .max(10)
+    .max(15) // GST might be a bit longer; adjust max length as needed
     .nonempty('GST is required')
     .regex(/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/, 'Invalid GST format'),
 });
