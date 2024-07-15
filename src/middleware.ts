@@ -17,13 +17,13 @@ export async function middleware(request: NextRequest) {
         return NextResponse.next();
     }
 
-    if (token && isPublicPath) {
+   /* if (token && isPublicPath) {
         return NextResponse.redirect(new URL('/', request.url));
     }
 
     if (!token && !isPublicPath) {
         return NextResponse.redirect(new URL('/signin', request.url));
-    }
+    }*/
 
     return NextResponse.next();
 }

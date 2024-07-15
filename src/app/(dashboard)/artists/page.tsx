@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from 'react';
 import { TrackSchema } from '../../Schema/trackSchema';
 
@@ -8,7 +10,7 @@ interface Person {
   role: string;
 }
 
-export default function NewTrack() {
+ function NewTrack() {
       // State variables for primary artists, producers, lyricists, composers, and errors
 
   const [primaryArtists, setPrimaryArtists] = useState<string[]>(['']);
@@ -331,3 +333,5 @@ export default function NewTrack() {
     </div>
   );
 }
+
+export default NewTrack
