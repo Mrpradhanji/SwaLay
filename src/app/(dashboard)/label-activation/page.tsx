@@ -1,7 +1,7 @@
 // components/SignupFormDemo.tsx
 "use client";
 import React, { useState } from "react";
-import SignupSchema from '../../Schema/labelactivation'; // Adjust the path as necessary
+import SignupSchema from '../../Schema/labelactivation'; 
 import { Label } from './ui/label';
 import { Input } from './ui/input';
 import { cn } from '../../../utils/cn';
