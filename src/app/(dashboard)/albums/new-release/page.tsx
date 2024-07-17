@@ -1,8 +1,10 @@
+"use client"
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { albumSchema } from '../../../Schema/albumSchema';
+import albumSchema from '@/app/Schema/albumSchema';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
+import { ZodError } from 'zod';
 
 interface FormData {
   title: string;
@@ -20,7 +22,6 @@ interface FormData {
 }
 
 const AlbumForm: React.FC = () => {
-  // useState hook to manage the form data
   const [formData, setFormData] = useState<FormData>({
     title: '',
     releaseDate: '',
@@ -35,15 +36,12 @@ const AlbumForm: React.FC = () => {
     cLine: '',
   });
 
-  // useState hook to manage form validation errors
   const [errors, setErrors] = useState<{ [key: string]: string[] }>({});
 
-  // Handling file drop for artwork
   const onDrop = (acceptedFiles: File[]) => {
     setFormData({ ...formData, artwork: acceptedFiles[0] });
   };
 
-  // useDropzone hook for handling file uploads
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
@@ -52,27 +50,30 @@ const AlbumForm: React.FC = () => {
     multiple: false,
   });
 
-  // Handling changes to form input fields
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handling form submission
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      // Validate form data using albumSchema
-      await albumSchema.parse(formData);
+      await albumSchema.parseAsync(formData);
       console.log('Form data is valid:', formData);
       // Submit form data
-    } catch (error: any) {
-      if (error.name === 'ValidationError') {
+    } catch (error) {
+      if (error instanceof ZodError) {
         const fieldErrors: { [key: string]: string[] } = {};
-        for (const field in error.formErrors.fieldErrors) {
-          fieldErrors[field] = error.formErrors.fieldErrors[field].map((err: any) => err.message);
-        }
+        error.errors.forEach((err) => {
+          const path = err.path[0] as string;
+          if (!fieldErrors[path]) {
+            fieldErrors[path] = [];
+          }
+          fieldErrors[path].push(err.message);
+        });
         setErrors(fieldErrors);
+      } else {
+        console.error('Unexpected error:', error);
       }
     }
   };
@@ -218,7 +219,7 @@ const AlbumForm: React.FC = () => {
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               />
               {errors.duration && <p className="text-red-500 text-sm mt-1">{errors.duration[0]}</p>}
-            </div>
+            </div> 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700">P Line</label>
@@ -247,7 +248,7 @@ const AlbumForm: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="mt-8 text-center">
+        <div className="mt-8 mb-4 text-center">
           <button
             type="submit"
             className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"

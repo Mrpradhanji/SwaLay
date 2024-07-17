@@ -1,4 +1,5 @@
 //addtrack.tsx
+"use client"
 import { useState } from 'react';
 import { TrackSchema } from '../../Schema/trackSchema';
 

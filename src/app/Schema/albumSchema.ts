@@ -1,16 +1,18 @@
-import { z } from 'zod';
+import * as z from 'zod';
 
-export const albumSchema = z.object({
-  title: z.string().nonempty("Title is required"),
-  releaseDate: z.string().nonempty("Release date is required"),
-  artist: z.string().nonempty("Artist name is required"),
-  genre: z.string().nonempty("Genre is required"),
-  label: z.string().nonempty("Record label is required"),
-  language: z.string().nonempty("Language is required"),
-  producer: z.string().nonempty("Producer name is required"),
-  duration: z.string().nonempty("Duration is required"),
-  artwork: z.any(),
+const albumSchema = z.object({
+  title: z.string().nonempty({ message: "Title is required" }),
+  releaseDate: z.string().nonempty({ message: "Release Date is required" }),
+  artist: z.string().nonempty({ message: "Artist is required" }),
+  genre: z.string().nonempty({ message: "Genre is required" }),
+  label: z.string().nonempty({ message: "Label is required" }),
+  language: z.string().nonempty({ message: "Language is required" }),
+  producer: z.string().nonempty({ message: "Producer is required" }),
+  duration: z.string().nonempty({ message: "Duration is required" }),
+  artwork: z.any().nullable().optional(),
+  cloudLink: z.string().url().optional(),
+  pLine: z.string().nonempty({ message: "P Line is required" }),
+  cLine: z.string().nonempty({ message: "C Line is required" }),
 });
 
-// Define the type for the FormData based on the schema
-export type FormData = z.infer<typeof albumSchema>;
+export default albumSchema;
