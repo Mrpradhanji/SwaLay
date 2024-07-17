@@ -37,7 +37,7 @@ function SignupFormDemo() {
       <div className="w-full max-w-md mx-auto p-8">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-white mb-2">Label Activation</h1>
-          <p className="text-lg text-gray-400">For SwaLay AUthorized Employees</p>
+          <p className="text-lg text-gray-400">For SwaLay Authorized Employees</p>
         </div>
 
         <form className="bg-[#112240] p-8 rounded-lg shadow-lg" onSubmit={handleSubmit}>
