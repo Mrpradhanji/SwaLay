@@ -25,7 +25,8 @@ const isValidURL = (url: string, type: string): boolean => {
     spotify: /^https:\/\/(open\.spotify\.com\/(track|album|artist)\/[a-zA-Z0-9]+(\?.*)?)$/,
     instagram:/^https:\/\/(www\.)?instagram\.com\/[a-zA-Z0-9._]+\/?(\?.*)?$/,
     twitter: /^https:\/\/x\.com\/[a-zA-Z0-9_]+\/?$/,
-    facebook:https://www.facebook.com/rohit.singhsengar.712/
+    facebook:/(?:https?:\/\/)?(?:www\.)?facebook\.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w\-]*\/)*([\w\-\.]*)/,
+
   };
   return regexes[type].test(url);
 };
